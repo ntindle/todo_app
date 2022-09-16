@@ -253,7 +253,7 @@ packages:
       name: motor_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.2"
+    version: "0.4.3"
   password_strength:
     dependency: transitive
     description:
