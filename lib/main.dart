@@ -10,7 +10,7 @@ Future<void> main() async {
   await GetStorage.init();
 
   Get.put(MotorFlutter(), permanent: true); // Initialize MotorFlutter
-  await MotorFlutter.init(); // Initialize MotorFlutter
+  await MotorFlutter.init(enableStorage: false); // Initialize MotorFlutter
 
   runApp(const MyApp());
 }

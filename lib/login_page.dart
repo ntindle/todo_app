@@ -17,18 +17,21 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   GetStorage box = GetStorage();
   TextEditingController addressController =
-      TextEditingController(text: Get.find<MotorFlutter>().didUrl.toString());
+      TextEditingController(text: GetStorage().read('address'));
   TextEditingController passwordController = TextEditingController();
 
   void _login() async {
     final res = await Get.find<MotorFlutter>().login(
-        password: passwordController.text, address: addressController.text);
+        password: passwordController.text,
+        address: addressController.text,
+        pskKey: GetStorage().read('passwordSecuredKey').cast<int>(),
+        dscKey: GetStorage().read('deviceSharedKey').cast<int>());
     if (res != null) {
-      if (res.success) {
-        Get.snackbar("Login", "Login successful");
-        Get.offAll(() => const MyHomePage(title: "Home"));
+      if (Get.find<MotorFlutter>().authorized.isTrue) {
+        Get.snackbar("Success", "Login successful");
+        Get.offAll(() => const MyHomePage(title: 'Flutter Demo Home Page'));
       } else {
-        Get.snackbar("Login", "Login failed");
+        Get.snackbar('Error', 'Login failed');
       }
     } else {
       Get.snackbar("Login", "Login failed");
@@ -62,8 +65,9 @@ class _LoginPageState extends State<LoginPage> {
                 controller: addressController,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'SNR DID Address',
-                    hintText: 'Enter valid DID as did:snr:aksldjfenkjaof29oi'),
+                    labelText: 'SNR Address',
+                    hintText:
+                        'Enter valid Address as snr1ioiaksldjfenkjaof29oi...'),
               ),
             ),
             Padding(
@@ -104,11 +108,19 @@ class _LoginPageState extends State<LoginPage> {
                 // --
                 onPressed: () async {
                   Get.put(RegisterController());
-                  final res =
-                      await MotorFlutter.to.showRegisterModal(onError: (err) {
+                  final res = await MotorFlutter.to.showRegisterModal(
+                      onKeysGenerated:
+                          (deviceSharedKey, passwordSecuredKey) async {
+                    GetStorage box = GetStorage();
+                    print("deviceSharedKey: $deviceSharedKey");
+                    print("passwordSecuredKey: $passwordSecuredKey");
+                    box.write("deviceSharedKey", deviceSharedKey);
+                    box.write("passwordSecuredKey", passwordSecuredKey);
+                  }, onError: (err) {
                     Get.snackbar("Error", err.toString());
                   });
                   if (res != null) {
+                    box.write('address', res.address);
                     // Store the address in the controller???
                     Get.offAll(() => const LoginPage(title: "Login"));
                   }
