@@ -7,16 +7,10 @@ import 'package:todo_app/login_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  void handleMotorInitResponse(InitializeResponse? response) {
-    if (response != null) {
-      print('Motor initialized');
-      print(response);
-    }
-  }
+  await GetStorage.init();
 
-  MotorFlutter motor =
-      Get.put(MotorFlutter(), permanent: true); // Initialize MotorFlutter
-  motor.init(handleMotorInitResponse); // Initialize MotorFlutter
+  Get.put(MotorFlutter(), permanent: true); // Initialize MotorFlutter
+  await MotorFlutter.init(); // Initialize MotorFlutter
 
   runApp(const MyApp());
 }

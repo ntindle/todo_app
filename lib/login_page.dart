@@ -15,18 +15,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  GetStorage box = GetStorage();
   TextEditingController addressController =
       TextEditingController(text: Get.find<MotorFlutter>().didUrl.toString());
   TextEditingController passwordController = TextEditingController();
 
   void _login() async {
-    print("logging in");
-    final res = await Get.find<MotorFlutter>()
-        .login(password: passwordController.text, did: addressController.text);
+    final res = await Get.find<MotorFlutter>().login(
+        password: passwordController.text, address: addressController.text);
     if (res != null) {
-      print(res);
+      if (res.success) {
+        Get.snackbar("Login", "Login successful");
+        Get.offAll(() => const MyHomePage(title: "Home"));
+      } else {
+        Get.snackbar("Login", "Login failed");
+      }
     } else {
-      print('Login failed');
+      Get.snackbar("Login", "Login failed");
     }
   }
 
