@@ -62,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+    print(Get.find<MotorFlutter>().authorized.value);
   }
 
   @override
