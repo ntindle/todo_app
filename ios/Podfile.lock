@@ -4,7 +4,7 @@ PODS:
   - Flutter (1.0.0)
   - flutter_keychain (0.0.1):
     - Flutter
-  - motor_flutter (0.5.2):
+  - motor_flutter (0.5.4):
     - Flutter
     - motor_pod (~> 6.0.0)
   - motor_pod (6.0.0)
