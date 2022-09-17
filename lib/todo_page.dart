@@ -18,7 +18,19 @@ class _TodoPageState extends State<TodoPage> {
   GetStorage box = GetStorage();
   TextEditingController todoItemController = TextEditingController();
 
-  void _addItem() {}
+  void _addItem() async {
+    final String task = todoItemController.text;
+    final doc = Get.find<SchemaDefinition>(tag: 'taskSchema').newDocument();
+    doc.set<String>('task', task);
+    SchemaDocument? resp = await doc.save(task);
+    if (resp != null) {
+      Get.snackbar('Success', 'Item added');
+      print(resp.did);
+      todoItemController.clear();
+    } else {
+      Get.snackbar('Error', 'Item not added');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
