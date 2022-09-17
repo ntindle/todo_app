@@ -25,7 +25,7 @@ class _TodoPageState extends State<TodoPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Login Page"),
+        title: const Text("Add Item"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -60,7 +60,7 @@ class _TodoPageState extends State<TodoPage> {
               child: ElevatedButton(
                 onPressed: () => _addItem(),
                 child: const Text(
-                  'Login',
+                  'Add',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
