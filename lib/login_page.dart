@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     Get.snackbar("Error", err.toString());
                   });
                   if (res != null) {
-                    box.write('address', res.address);
+                    box.write('address', res.owner);
                     // Store the address in the controller???
                     Get.offAll(() => const LoginPage(title: "Login"));
                   }

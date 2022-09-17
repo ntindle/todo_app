@@ -61,19 +61,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _createSchema() async {
     if (!Get.isRegistered<SchemaDefinition>(tag: "taskSchema")) {
-      CreateSchemaResponse? resp = await MotorFlutter.to.createSchema(
-          "task",
-          {'task': SchemaKind.STRING},
-          {'use': 'github.com/ntindle/todo_app'}, (schemaId) {
-        print("Schema created: $schemaId");
-        SchemaDefinition schema = SchemaDefinition(
-            did: schemaId?.whatIs.did,
-            creator: schemaId?.whatIs.creator,
-            label: schemaId?.whatIs.schema.label,
-            fields: schemaId?.whatIs.schema.fields);
-        Get.put(schema, tag: "taskSchema");
-      });
-      print(resp);
+      CreateSchemaResponse resp = await MotorFlutter.to.createSchema(
+          "task", {'task': SchemaKind.STRING},
+          metadata: {'use': 'github.com/ntindle/todo_app'});
+
+      print("Schema created: $resp");
+      SchemaDefinition schema = SchemaDefinition(
+          did: resp.whatIs.did,
+          creator: resp.whatIs.creator,
+          label: resp.whatIs.schema.label,
+          fields: resp.whatIs.schema.fields);
+      print("SchemaDefinition: $schema");
+      Get.put(schema, tag: "taskSchema");
     } else {
       print(
           "Schema already exists ${Get.find<SchemaDefinition>(tag: "taskSchema").did}");
