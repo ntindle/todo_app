@@ -1,9 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:motor_flutter/motor_flutter.dart';
-import 'package:todo_app/main.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key, required this.title});
@@ -20,12 +20,12 @@ class _TodoPageState extends State<TodoPage> {
 
   void _addItem() async {
     final String task = todoItemController.text;
-    final doc = Get.find<SchemaDefinition>(tag: 'taskSchema').newDocument();
+    final doc = Get.find<Schema>(tag: 'taskSchema').newDocument();
     doc.set<String>('task', task);
-    SchemaDocument? resp = await doc.save(task);
+    SchemaDocument? resp = await doc.upload(task);
     if (resp != null) {
       Get.snackbar('Success', 'Item added');
-      print(resp.did);
+      print(resp.schemaDid);
       todoItemController.clear();
     } else {
       Get.snackbar('Error', 'Item not added');
@@ -81,5 +81,11 @@ class _TodoPageState extends State<TodoPage> {
         ),
       ),
     );
+  }
+}
+
+void debugPrint(Object? message) {
+  if (kDebugMode) {
+    print(message);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -97,39 +98,34 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              height: 50,
-              width: 200,
               margin: const EdgeInsets.only(top: 20),
-              child: MaterialButton(
-                color: Colors.white,
-                child: const Text('Register Account'),
-                // --
-                // 2. Add the RegisterAccount ModalView on tap
-                // --
-                onPressed: () async {
-                  Get.put(RegisterController());
-                  final res = await MotorFlutter.to.showRegisterModal(
-                      onKeysGenerated:
-                          (deviceSharedKey, passwordSecuredKey) async {
-                    GetStorage box = GetStorage();
-                    print("deviceSharedKey: $deviceSharedKey");
-                    print("passwordSecuredKey: $passwordSecuredKey");
-                    box.write("deviceSharedKey", deviceSharedKey);
-                    box.write("passwordSecuredKey", passwordSecuredKey);
-                  }, onError: (err) {
-                    Get.snackbar("Error", err.toString());
-                  });
-                  if (res != null) {
-                    box.write('address', res.owner);
-                    // Store the address in the controller???
-                    Get.offAll(() => const LoginPage(title: "Login"));
+              child: ContinueOnSonrButton(
+                onSuccess: (ai) {
+                  if (ai == null) {
+                    throw Exception("AuthInfo is null");
                   }
+                  debugPrint("Address: ${ai.address}");
+                  debugPrint("deviceSharedKey: ${ai.aesDscKey}");
+                  debugPrint("passwordSecuredKey: ${ai.aesPskKey}");
+
+                  GetStorage().write("address", ai.address);
+                  GetStorage().write("deviceSharedKey", ai.aesDscKey);
+                  GetStorage().write("passwordSecuredKey", ai.aesPskKey);
+                },
+                onError: (err) {
+                  Get.snackbar("Error", err.toString());
                 },
               ),
-            ),
+            )
           ],
         ),
       ),
     );
+  }
+}
+
+void debugPrint(Object? message) {
+  if (kDebugMode) {
+    print(message);
   }
 }

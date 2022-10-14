@@ -4,22 +4,36 @@ PODS:
   - Flutter (1.0.0)
   - flutter_keychain (0.0.1):
     - Flutter
-  - motor_flutter (0.5.5):
+  - flutter_secure_storage (3.3.1):
     - Flutter
-    - motor_pod (~> 6.0.0)
-  - motor_pod (6.0.0)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - local_auth_ios (0.0.1):
+    - Flutter
+  - motor_flutter (0.8.2):
+    - Flutter
+    - motor_pod (~> 18.0.0)
+  - motor_pod (18.0.0)
   - path_provider_ios (0.0.1):
     - Flutter
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
 
 DEPENDENCIES:
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_keychain (from `.symlinks/plugins/flutter_keychain/ios`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - motor_flutter (from `.symlinks/plugins/motor_flutter/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
 
 SPEC REPOS:
   trunk:
+    - FMDB
     - motor_pod
 
 EXTERNAL SOURCES:
@@ -29,18 +43,28 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_keychain:
     :path: ".symlinks/plugins/flutter_keychain/ios"
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  local_auth_ios:
+    :path: ".symlinks/plugins/local_auth_ios/ios"
   motor_flutter:
     :path: ".symlinks/plugins/motor_flutter/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_keychain: 01aabf894ffe8b01adfda1d9df21c210c1b4b452
-  motor_flutter: c4cd1c1fcdaa9f70bc66c4e003f1f9d6d2a5bb57
-  motor_pod: 8b96b40684f903024a1eabfa76b7f6d9e36f568f
+  flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  local_auth_ios: 0d333dde7780f669e66f19d2ff6005f3ea84008d
+  motor_flutter: 2f07582e1f47cf353c87847775c40bc518318af3
+  motor_pod: b6d5f24cc49eeb11087ba6a50bdeeb7ae79061ba
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
 
 PODFILE CHECKSUM: d2c229b41aa567442ecc97be5a7d26e703824212
 

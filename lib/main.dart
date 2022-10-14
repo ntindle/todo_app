@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -7,12 +8,10 @@ import 'package:todo_app/login_page.dart';
 import 'package:todo_app/todo_page.dart';
 
 Future<void> main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-
-  Get.put(MotorFlutter(), permanent: true); // Initialize MotorFlutter
-  await MotorFlutter.init(enableStorage: false); // Initialize MotorFlutter
-
+  await MotorFlutter.init(); // Initialize MotorFlutter
   runApp(const MyApp());
 }
 
@@ -60,22 +59,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _createSchema() async {
-    if (!Get.isRegistered<SchemaDefinition>(tag: "taskSchema")) {
-      CreateSchemaResponse resp = await MotorFlutter.to.createSchema(
-          "task", {'task': SchemaKind.STRING},
-          metadata: {'use': 'github.com/ntindle/todo_app'});
+    if (!Get.isRegistered<Schema>(tag: "taskSchema")) {
+      CreateSchemaResponse resp = await MotorFlutter.to.publishSchema("task", {
+        'task': SchemaFieldKind(kind: Kind.STRING),
+      }, metadata: {
+        'use': 'github.com/ntindle/todo_app',
+      });
 
       print("Schema created: $resp");
-      SchemaDefinition schema = SchemaDefinition(
-          did: resp.whatIs.did,
-          creator: resp.whatIs.creator,
-          label: resp.whatIs.schema.label,
-          fields: resp.whatIs.schema.fields);
-      print("SchemaDefinition: $schema");
+      final schema = resp.whatIs.schema;
+      print("Schema: $schema");
       Get.put(schema, tag: "taskSchema");
     } else {
-      print(
-          "Schema already exists ${Get.find<SchemaDefinition>(tag: "taskSchema").did}");
+      print("Schema already exists ${Get.find<Schema>(tag: "taskSchema").did}");
     }
   }
 
@@ -129,5 +125,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+
+void debugPrint(Object? message) {
+  if (kDebugMode) {
+    print(message);
   }
 }
